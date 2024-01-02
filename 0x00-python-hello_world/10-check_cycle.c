@@ -1,31 +1,26 @@
-#include <stdlib.h>
 #include "lists.h"
 
 /**
- * check_cycle - Checks if a singly-linked list contains a cycle.
- * @list: A singly-linked list.
- *
- * Return: If there is no cycle - 0.
- *         If there is a cycle - 1.
+ * check_cycle - checks to see if a list is in an endless loop or cycle
+ * @list: the list to check
+ * Return: 0 if no cycle is detected, 1 if there is a cycle
  */
+
 int check_cycle(listint_t *list)
 {
-	listint_t *slow, *fast;
+  listint_t *doub = list;
+  listint_t *reg = list;
 
-	if (list == NULL || list->next == NULL)
-		return (0);
+  if (list == NULL)
+    return (0);
 
-	slow = list->next;
-	fast = list->next->next;
+  while (doub && doub->next)
+    {
+      reg = reg->next;
+      doub = doub->next->next;
 
-	while (slow && fast && fast->next)
-	{
-		if (slow == fast)
-			return (1);
-
-		slow = slow->next;
-		fast = fast->next->next;
-	}
-
-	return (0);
+      if (reg == doub)
+	return (1);
+    }
+  return (0);
 }
